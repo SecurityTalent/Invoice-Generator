@@ -89,9 +89,10 @@ const InvoiceForm = () => {
                                 <Items />
                             </WizardStep>
 
-                            {/* <WizardStep>
-                                <PaymentInformation />
-                            </WizardStep> */}
+                            <WizardStep>
+                                {/* <PaymentInformation /> */}
+                                <p>Payment info function closed</p>
+                            </WizardStep>
 
                             <WizardStep>
                                 <InvoiceSummary />
