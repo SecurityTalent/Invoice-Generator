@@ -14,8 +14,10 @@ import { InvoiceType } from "@/types";
 
 const InvoiceTemplate2 = (data: InvoiceType) => {
     const { sender, receiver, details } = data;
+
     return (
         <InvoiceLayout data={data}>
+            {/* Header */}
             <div className="flex justify-between">
                 <div>
                     <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
@@ -24,6 +26,7 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                     <span className="mt-1 block text-gray-500">
                         {details.invoiceNumber}
                     </span>
+
                     {details.invoiceLogo && (
                         <img
                             src={details.invoiceLogo}
@@ -37,6 +40,7 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                         {sender.name}
                     </h1>
                 </div>
+
                 <div className="text-right">
                     <address className="mt-4 not-italic text-gray-800">
                         {sender.address}
@@ -44,11 +48,11 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                         {sender.zipCode}, {sender.city}
                         <br />
                         {sender.country}
-                        <br />
                     </address>
                 </div>
             </div>
 
+            {/* Bill To */}
             <div className="mt-6 grid sm:grid-cols-2 gap-3">
                 <div>
                     <h3 className="text-lg font-semibold text-gray-800">
@@ -61,245 +65,153 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                         {receiver.address}, {receiver.zipCode}
                         <br />
                         {receiver.city}, {receiver.country}
-                        <br />
                     </address>
                 </div>
+
                 <div className="sm:text-right space-y-2">
-                    <div className="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
-                        <dl className="grid sm:grid-cols-6 gap-x-3">
-                            <dt className="col-span-3 font-semibold text-gray-800">
-                                Invoice date:
-                            </dt>
-                            <dd className="col-span-3 text-gray-500">
-                                {new Date(
-                                    details.invoiceDate
-                                ).toLocaleDateString("en-US", DATE_OPTIONS)}
-                            </dd>
-                        </dl>
-                        <dl className="grid sm:grid-cols-6 gap-x-3">
-                            <dt className="col-span-3 font-semibold text-gray-800">
-                                Due date:
-                            </dt>
-                            <dd className="col-span-3 text-gray-500">
-                                {new Date(details.dueDate).toLocaleDateString(
-                                    "en-US",
-                                    DATE_OPTIONS
-                                )}
-                            </dd>
-                        </dl>
-                    </div>
+                    <dl className="grid sm:grid-cols-6 gap-x-3">
+                        <dt className="col-span-3 font-semibold text-gray-800">
+                            Invoice date:
+                        </dt>
+                        <dd className="col-span-3 text-gray-500">
+                            {new Date(details.invoiceDate).toLocaleDateString(
+                                "en-US",
+                                DATE_OPTIONS
+                            )}
+                        </dd>
+                    </dl>
+
+                    <dl className="grid sm:grid-cols-6 gap-x-3">
+                        <dt className="col-span-3 font-semibold text-gray-800">
+                            Due date:
+                        </dt>
+                        <dd className="col-span-3 text-gray-500">
+                            {new Date(details.dueDate).toLocaleDateString(
+                                "en-US",
+                                DATE_OPTIONS
+                            )}
+                        </dd>
+                    </dl>
                 </div>
             </div>
 
-            <div className="mt-3">
-                <div className="border border-gray-200 p-1 rounded-lg space-y-1">
-                    <div className="hidden sm:grid sm:grid-cols-5">
-                        <div className="sm:col-span-2 text-xs font-medium text-gray-500 uppercase">
-                            Item
+            {/* Items */}
+            <div className="mt-6 border border-gray-200 rounded-lg p-2">
+                {details.items.map((item, index) => (
+                    <div
+                        key={index}
+                        className="grid grid-cols-4 border-b border-gray-300 py-2"
+                    >
+                        <div>{item.name}</div>
+                        <div>{item.quantity}</div>
+                        <div>
+                            {item.unitPrice} {details.currency}
                         </div>
-                        <div className="text-left text-xs font-medium text-gray-500 uppercase">
-                            Qty
-                        </div>
-                        <div className="text-left text-xs font-medium text-gray-500 uppercase">
-                            Rate
-                        </div>
-                        <div className="text-right text-xs font-medium text-gray-500 uppercase">
-                            Amount
+                        <div className="text-right">
+                            {item.total} {details.currency}
                         </div>
                     </div>
-                    <div className="hidden sm:block border-b border-gray-200"></div>
-                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-y-1">
-                        {details.items.map((item, index) => (
-                            <React.Fragment key={index}>
-                                <div className="col-span-full sm:col-span-2 border-b border-gray-300">
-                                    <p className="font-medium text-gray-800">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-xs text-gray-600 whitespace-pre-line">
-                                        {item.description}
-                                    </p>
-                                </div>
-                                <div className="border-b border-gray-300">
-                                    <p className="text-gray-800">
-                                        {item.quantity}
-                                    </p>
-                                </div>
-                                <div className="border-b border-gray-300">
-                                    <p className="text-gray-800">
-                                        {item.unitPrice} {details.currency}
-                                    </p>
-                                </div>
-                                <div className="border-b border-gray-300">
-                                    <p className="sm:text-right text-gray-800">
-                                        {item.total} {details.currency}
-                                    </p>
-                                </div>
-                            </React.Fragment>
-                        ))}
-                    </div>
-                    <div className="sm:hidden border-b border-gray-200"></div>
-                </div>
+                ))}
             </div>
 
-            <div className="mt-2 flex sm:justify-end">
-                <div className="w-full max-w-2xl sm:text-right space-y-2">
-                    <div className="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
-                        <dl className="grid sm:grid-cols-5 gap-x-3">
-                            <dt className="col-span-3 font-semibold text-gray-800">
-                                Subtotal:
-                            </dt>
-                            <dd className="col-span-2 text-gray-500">
-                                {formatNumberWithCommas(
-                                    Number(details.subTotal)
-                                )}{" "}
-                                {details.currency}
-                            </dd>
-                        </dl>
-                        {details.discountDetails?.amount != undefined &&
-                            details.discountDetails?.amount > 0 && (
-                                <dl className="grid sm:grid-cols-5 gap-x-3">
-                                    <dt className="col-span-3 font-semibold text-gray-800">
-                                        Discount:
-                                    </dt>
-                                    <dd className="col-span-2 text-gray-500">
-                                        {details.discountDetails.amountType ===
-                                        "amount"
-                                            ? `- ${details.discountDetails.amount} ${details.currency}`
-                                            : `- ${details.discountDetails.amount}%`}
-                                    </dd>
-                                </dl>
-                            )}
-                        {details.taxDetails?.amount != undefined &&
-                            details.taxDetails?.amount > 0 && (
-                                <dl className="grid sm:grid-cols-5 gap-x-3">
-                                    <dt className="col-span-3 font-semibold text-gray-800">
-                                        Tax:
-                                    </dt>
-                                    <dd className="col-span-2 text-gray-500">
-                                        {details.taxDetails.amountType ===
-                                        "amount"
-                                            ? `+ ${details.taxDetails.amount} ${details.currency}`
-                                            : `+ ${details.taxDetails.amount}%`}
-                                    </dd>
-                                </dl>
-                            )}
-                        {details.shippingDetails?.cost != undefined &&
-                            details.shippingDetails?.cost > 0 && (
-                                <dl className="grid sm:grid-cols-5 gap-x-3">
-                                    <dt className="col-span-3 font-semibold text-gray-800">
-                                        Shipping:
-                                    </dt>
-                                    <dd className="col-span-2 text-gray-500">
-                                        {details.shippingDetails.costType ===
-                                        "amount"
-                                            ? `+ ${details.shippingDetails.cost} ${details.currency}`
-                                            : `+ ${details.shippingDetails.cost}%`}
-                                    </dd>
-                                </dl>
-                            )}
-                        <dl className="grid sm:grid-cols-5 gap-x-3">
-                            <dt className="col-span-3 font-semibold text-gray-800">
-                                Total:
-                            </dt>
-                            <dd className="col-span-2 text-gray-500">
-                                {formatNumberWithCommas(
-                                    Number(details.totalAmount)
-                                )}{" "}
-                                {details.currency}
-                            </dd>
-                        </dl>
-                        {details.totalAmountInWords && (
-                            <dl className="grid sm:grid-cols-5 gap-x-3">
-                                <dt className="col-span-3 font-semibold text-gray-800">
-                                    Total in words:
-                                </dt>
-                                <dd className="col-span-2 text-gray-500">
-                                    <em>
-                                        {details.totalAmountInWords}{" "}
-                                        {details.currency}
-                                    </em>
-                                </dd>
-                            </dl>
-                        )}
-                    </div>
-                </div>
-            </div>
+            {/* Totals Section */}
+            <div className="mt-6 sm:flex sm:justify-end">
+                <div className="w-full max-w-md space-y-2">
 
-            <div>
-                <div className="my-4">
-                    <div className="my-2">
-                        <p className="font-semibold text-blue-600">
-                            Additional notes:
-                        </p>
-                        <p className="font-regular text-gray-800">
-                            {details.additionalNotes}
-                        </p>
+                    {/* Subtotal */}
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Subtotal:</span>
+                        <span>
+                            {formatNumberWithCommas(
+                                Number(details.subTotal)
+                            )}{" "}
+                            {details.currency}
+                        </span>
                     </div>
-                    <div className="my-2">
-                        <p className="font-semibold text-blue-600">
-                            Payment terms:
-                        </p>
-                        <p className="font-regular text-gray-800">
-                            {details.paymentTerms}
-                        </p>
-                    </div>
-                    <div className="my-2">
-                        <span className="font-semibold text-md text-gray-800">
-                            Please send the payment to this address
-                            <p className="text-sm">
-                                Bank: {details.paymentInformation?.bankName}
-                            </p>
-                            <p className="text-sm">
-                                Account name:{" "}
-                                {details.paymentInformation?.accountName}
-                            </p>
-                            <p className="text-sm">
-                                Account no:{" "}
-                                {details.paymentInformation?.accountNumber}
-                            </p>
+
+                    {/* Discount */}
+                    {details.discountDetails?.amount > 0 && (
+                        <div className="flex justify-between">
+                            <span className="font-semibold">Discount:</span>
+                            <span>
+                                - {details.discountDetails.amount}
+                                {details.discountDetails.amountType === "amount"
+                                    ? ` ${details.currency}`
+                                    : "%"}
+                            </span>
+                        </div>
+                    )}
+
+                    {/* ✅ Advance (Previously Tax) */}
+                    {details.taxDetails?.amount > 0 && (
+                        <div className="flex justify-between">
+                            <span className="font-semibold">Advance:</span>
+                            <span>
+                                + {details.taxDetails.amount}
+                                {details.taxDetails.amountType === "amount"
+                                    ? ` ${details.currency}`
+                                    : "%"}
+                            </span>
+                        </div>
+                    )}
+
+                    {/* Shipping */}
+                    {details.shippingDetails?.cost > 0 && (
+                        <div className="flex justify-between">
+                            <span className="font-semibold">Shipping:</span>
+                            <span>
+                                + {details.shippingDetails.cost}
+                                {details.shippingDetails.costType === "amount"
+                                    ? ` ${details.currency}`
+                                    : "%"}
+                            </span>
+                        </div>
+                    )}
+
+                    {/* Total */}
+                    <div className="flex justify-between text-lg font-bold border-t pt-2">
+                        <span>Total:</span>
+                        <span>
+                            {formatNumberWithCommas(
+                                Number(details.totalAmount)
+                            )}{" "}
+                            {details.currency}
                         </span>
                     </div>
                 </div>
-                <p className="text-gray-500 text-sm">
-                    If you have any questions concerning this invoice, use the
-                    following contact information:
-                </p>
-                <div>
-                    <p className="block text-sm font-medium text-gray-800">
-                        {sender.email}
-                    </p>
-                    <p className="block text-sm font-medium text-gray-800">
-                        {sender.phone}
-                    </p>
-                </div>
+            </div>
+
+            {/* Notes */}
+            <div className="mt-6">
+                {details.additionalNotes && (
+                    <>
+                        <p className="font-semibold">Additional notes:</p>
+                        <p>{details.additionalNotes}</p>
+                    </>
+                )}
+
+                {details.paymentTerms && (
+                    <>
+                        <p className="font-semibold mt-3">
+                            Payment terms:
+                        </p>
+                        <p>{details.paymentTerms}</p>
+                    </>
+                )}
             </div>
 
             {/* Signature */}
-            {details?.signature?.data && isDataUrl(details?.signature?.data) ? (
+            {details?.signature?.data && isDataUrl(details.signature.data) && (
                 <div className="mt-6">
-                    <p className="font-semibold text-gray-800">Signature:</p>
+                    <p className="font-semibold">Signature:</p>
                     <img
                         src={details.signature.data}
                         width={120}
                         height={60}
-                        alt={`Signature of ${sender.name}`}
+                        alt="Signature"
                     />
                 </div>
-            ) : details.signature?.data ? (
-                <div className="mt-6">
-                    <p className="text-gray-800">Signature:</p>
-                    <p
-                        style={{
-                            fontSize: 30,
-                            fontWeight: 400,
-                            fontFamily: `${details.signature.fontFamily}, cursive`,
-                            color: "black",
-                        }}
-                    >
-                        {details.signature.data}
-                    </p>
-                </div>
-            ) : null}
+            )}
         </InvoiceLayout>
     );
 };

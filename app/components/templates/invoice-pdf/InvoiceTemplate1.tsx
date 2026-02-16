@@ -132,7 +132,7 @@ const InvoiceTemplate = (data: InvoiceType) => {
 							)}
 						{details.taxDetails?.amount != undefined && details.taxDetails?.amount > 0 && (
 							<dl className='grid sm:grid-cols-5 gap-x-3'>
-								<dt className='col-span-3 font-semibold text-gray-800'>Tax:</dt>
+								<dt className='col-span-3 font-semibold text-gray-800'>Advance:</dt>
 								<dd className='col-span-2 text-gray-500'>
 									{details.taxDetails.amountType === "amount"
 										? `+ ${details.taxDetails.amount} ${details.currency}`
