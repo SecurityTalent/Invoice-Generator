@@ -53,7 +53,7 @@ SecurityTalent-Invoify is a web-based invoice generator application built with N
 ## Demo
 
 
-Visit the [live demo](https://securi3ytalent.vercel.app) to see Invoify in action.
+Visit the [live demo](https://securitytalent.vercel.app) to see Invoify in action.
 
 ## Getting Started
 
