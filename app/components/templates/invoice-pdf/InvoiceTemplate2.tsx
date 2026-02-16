@@ -178,8 +178,8 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                                     <dd className="col-span-2 text-gray-500">
                                         {details.taxDetails.amountType ===
                                         "amount"
-                                            ? `+ ${details.taxDetails.amount} ${details.currency}`
-                                            : `+ ${details.taxDetails.amount}%`}
+                                            ? `- ${details.taxDetails.amount} ${details.currency}`
+                                            : `- ${details.taxDetails.amount}%`}
                                     </dd>
                                 </dl>
                             )}

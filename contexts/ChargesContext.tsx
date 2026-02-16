@@ -206,7 +206,7 @@ export const ChargesContextProvider = ({ children }: ChargesContextProps) => {
 
         if (!isNaN(taxAmount)) {
             if (taxType == "amount") {
-                total += taxAmount;
+                total -= taxAmount;
                 taxAmountType = "amount";
             } else {
                 total += total * (taxAmount / 100);

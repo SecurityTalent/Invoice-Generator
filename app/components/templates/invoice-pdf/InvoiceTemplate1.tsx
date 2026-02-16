@@ -135,8 +135,8 @@ const InvoiceTemplate = (data: InvoiceType) => {
 								<dt className='col-span-3 font-semibold text-gray-800'>Advance:</dt>
 								<dd className='col-span-2 text-gray-500'>
 									{details.taxDetails.amountType === "amount"
-										? `+ ${details.taxDetails.amount} ${details.currency}`
-										: `+ ${details.taxDetails.amount}%`}
+										? `- ${details.taxDetails.amount} ${details.currency}`
+										: `- ${details.taxDetails.amount}%`}
 								</dd>
 							</dl>
 						)}
@@ -150,12 +150,14 @@ const InvoiceTemplate = (data: InvoiceType) => {
 								</dd>
 							</dl>
 						)}
-						<dl className='grid sm:grid-cols-5 gap-x-3'>
+						{/* <dl className='grid sm:grid-cols-5 gap-x-3'>
 							<dt className='col-span-3 font-semibold text-gray-800'>Total:</dt>
 							<dd className='col-span-2 text-gray-500'>
 								{formatNumberWithCommas(Number(details.totalAmount))} {details.currency}
 							</dd>
-						</dl>
+						</dl> */}
+
+						
 						{details.totalAmountInWords && (
 							<dl className='grid sm:grid-cols-5 gap-x-3'>
 								<dt className='col-span-3 font-semibold text-gray-800'>Total in words:</dt>
