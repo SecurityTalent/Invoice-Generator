@@ -39,7 +39,7 @@ export default function SendPdfEmail({ invoiceNumber }: SendPdfEmailProps) {
                                 height={120}
                             />
                             <Heading className="leading-tight">
-                                Thanks for using Invoify!
+                                Thanks for using Invoice App!
                             </Heading>
 
                             <Text>
